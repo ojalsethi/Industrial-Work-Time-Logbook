@@ -1,0 +1,24 @@
+{
+  "loopback-component-explorer": {
+    "mountPath": "/explorer",
+    "generateOperationScopedModels": true
+  },
+  "./components/total-count": {
+    "pattern": [
+      "**.find"
+    ],
+    "patternForRelated": {
+      "Customer": [
+        "find",
+        "**.__get__timeSheets",
+        "**.__get__tasks"
+      ],
+      "Client": [
+        "find"
+      ],
+      "Project": [
+        "find"
+      ]
+    }
+  }
+}

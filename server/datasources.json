@@ -1,0 +1,28 @@
+{
+  "db": {
+    "host": "mysql",
+    "port": 3306,
+    "database": "workplace",
+    "password": "password",
+    "name": "db",
+    "connector": "mysql",
+    "user": "root",
+    "multipleStatements": true
+  },
+  "email": {
+    "name": "email",
+    "transports": [
+      {
+        "type": "smtp",
+        "host": "mail.company.com",
+        "secure": true,
+        "port": 587,
+        "auth": {
+          "user": "account@company.com",
+          "pass": "password"
+        }
+      }
+    ],
+    "connector": "mail"
+  }
+}

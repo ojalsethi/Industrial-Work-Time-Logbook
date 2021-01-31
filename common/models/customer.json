@@ -1,0 +1,257 @@
+{
+  "name": "Customer",
+  "base": "User",
+  "strict": true,
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "caseSensitiveEmail": true,
+    "rejectPasswordChangesViaPatchOrReplace": true
+  },
+  "http": {
+    "path": "users"
+  },
+  "hidden": [
+    "password",
+    "verificationToken",
+    "emailVerified"
+  ],
+  "protected": [
+    "password",
+    "verificationToken",
+    "emailVerified"
+  ],
+  "resetPasswordTokenTTL": 900,
+  "properties": {
+    "realm": false,
+    "username": false,
+    "email": {
+      "type": "string",
+      "required": true,
+      "index": {
+        "unique": true
+      },
+      "title": "Email",
+      "example": "larrymiller@gmail.com"
+    },
+    "password": {
+      "type": "string",
+      "required": true
+    },
+    "emailVerified": {
+      "type": "boolean",
+      "title": "Whether account email id is verified or not."
+    },
+    "verificationToken": {
+      "type": "string",
+      "title": "Email verification token"
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "title": "Name",
+      "example": "John Doe"
+    },
+    "dob": {
+      "type": "date",
+      "title": "Date of birth",
+      "example": "06/25/1985",
+      "mysql": {
+        "dataType": "date"
+      }
+    },
+    "gender": {
+      "type": "string",
+      "title": "Gender",
+      "example": "male"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "accessTokens": {
+      "type": "hasMany",
+      "model": "CustomerAccessToken",
+      "foreignKey": "userId",
+      "options": {
+        "disableInclude": true
+      }
+    },
+    "roles": {
+      "type": "hasMany",
+      "model": "Role",
+      "foreignKey": "principalId",
+      "keyThrough": "roleId",
+      "through": "RoleMapping"
+    },
+    "timeSheets": {
+      "type": "hasMany",
+      "model": "TimeSheet",
+      "foreignKey": "userId",
+      "options": {
+        "disableInclude": false,
+        "http": {
+          "path": "time-sheets"
+        }
+      }
+    },
+    "tasks": {
+      "type": "hasMany",
+      "model": "Task",
+      "foreignKey": "userId",
+      "options": {
+        "disableInclude": false
+      }
+    },
+    "stats": {
+      "type": "hasOne",
+      "model": "Stats",
+      "foreignKey": "userId",
+      "options": {
+        "disableInclude": false
+      }
+    }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "deleteById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "login"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "logout"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "patchAttributes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "replaceById"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "verify"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "confirm"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "resetPassword"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "changePassword"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "setPassword"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__timeSheets"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__timeSheets"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__updateById__timeSheets"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__destroyById__timeSheets"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__tasks"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__tasks"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__updateById__tasks"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__destroyById__tasks"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__stats"
+    }
+  ],
+  "methods": {}
+}

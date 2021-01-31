@@ -1,0 +1,129 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "Customer": {
+    "dataSource": "db",
+    "options": {
+      "emailVerificationRequired": true,
+      "remoting": {
+        "sharedMethods": {
+          "find": true,
+          "login": true,
+          "logout": true,
+          "create": true,
+          "prototype.patchAttributes": true,
+          "resetPassword": true,
+          "setPassword": true,
+          "changePassword": true,
+          "confirm": true,
+          "addRole": true,
+          "prototype.__get__timeSheets": true,
+          "prototype.__create__timeSheets": true,
+          "prototype.__updateById__timeSheets": true,
+          "prototype.__destroyById__timeSheets": true,
+          "prototype.__destroyById__tasks": true,
+          "prototype.__get__tasks": true,
+          "prototype.__create__tasks": true,
+          "prototype.__updateById__tasks": true,
+          "prototype.__get__stats": true
+        }
+      }
+    }
+  },
+  "CustomerAccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Email": {
+    "dataSource": "email",
+    "public": false
+  },
+  "TimeSheet": {
+    "dataSource": "db",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "find": true,
+          "create": true,
+          "prototype.patchAttributes": true,
+          "deleteById": true,
+          "download": true,
+          "destroyAllCustom": true
+        }
+      }
+    }
+  },
+  "Project": {
+    "dataSource": "db",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "find": true,
+          "create": true,
+          "prototype.patchAttributes": true,
+          "deleteById": true,
+          "destroyAllCustom": true
+        }
+      }
+    }
+  },
+  "Client": {
+    "dataSource": "db",
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "find": true,
+          "create": true,
+          "prototype.patchAttributes": true,
+          "deleteById": true,
+          "destroyAllCustom": true
+        }
+      }
+    }
+  },
+  "Task": {
+    "dataSource": "db",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "types": true,
+          "find": true
+        }
+      }
+    }
+  },
+  "Stats": {
+    "dataSource": "db",
+    "public": true
+  }
+}

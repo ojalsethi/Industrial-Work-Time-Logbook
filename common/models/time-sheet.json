@@ -1,0 +1,80 @@
+{
+  "name": "TimeSheet",
+  "plural": "time-sheets",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "status": {
+      "type": "string",
+      "default": "completed"
+    },
+    "duration": {
+      "type": "number",
+      "required": true
+    },
+    "date": {
+      "type": "Date",
+      "defaultFn": "now",
+      "mysql": {
+        "dataType": "Date"
+      }
+    },
+    "comment": {
+      "type": "string",
+      "length": 1000
+    },
+    "taskId": {
+      "required": true
+    },
+    "userId": {
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "task": {
+      "type": "belongsTo",
+      "model": "Task",
+      "foreignKey": "taskId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "Customer",
+      "foreignKey": "userId",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "deleteById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "custom-owner",
+      "permission": "ALLOW",
+      "property": "destroyAllCustom"
+    }
+  ],
+  "methods": {}
+}
